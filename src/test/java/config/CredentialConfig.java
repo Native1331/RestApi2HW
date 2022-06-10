@@ -10,9 +10,6 @@ import org.aeonbits.owner.Config;
         String authCookieName();
         String selenoidLogin();
         String selenoidPassword();
-
-
-
     }
 
 

@@ -1,21 +1,23 @@
 package tests;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
+
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static helpers.CustomApiListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
-
 public class WebShopTest extends TestBase{
-  String login;
-  String password;
-  String authCookieName;
+    String login;
+    String password;
+    String authCookieName;
     @Test
     @Tag("demowebshop")
     @DisplayName("Successful authorization to some demowebshop (UI)")
