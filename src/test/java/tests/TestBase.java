@@ -15,6 +15,10 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase{
+    static CredentialConfig config = ConfigFactory.create(CredentialConfig.class);
+    static String login = config.login(),
+            password = config.password(),
+            authCookieName = config.authCookieName();
 
     @BeforeAll
     static void setUp() throws Exception {
