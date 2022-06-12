@@ -2,6 +2,7 @@ package tests;
 
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.restassured.AllureRestAssured;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -10,11 +11,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static helpers.CustomApiListener.withCustomTemplates;
+import static io.netty.channel.group.ChannelMatchers.is;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
-import static java.lang.String.format;
-import static org.hamcrest.Matchers.is;
+
 
 public class WebShopTest extends TestBase {
     @Test
@@ -176,19 +176,22 @@ public class WebShopTest extends TestBase {
                         String body = "addtocart_13.EnteredQuantity: 1";
 
                         given()
-                                .contentType(JSON)
+                                .contentType("application/x-www-form-urlencoded")
                                 .log().all()
+                                .cookie()
                                 .when()
                                 .post("/addproducttocart/details/13/1")
                                 .then()
                                 .log().all()
-                                .statusCode(200);
-                        //                .body("message", is("The product has been added to your "))
+                                .statusCode(200)
+                                .body("message", Matchers.is("The product has been added to your " +
+                                        "<a href=\"/cart\">shopping cart</a>"));
                     });
 
-                step("Find item in card", () -> {
+                step("Find item in cart", () -> {
                     given()
                             .log().all()
+                            .cookie()
                             .when()
                             .get("/cart")
                             .then()
